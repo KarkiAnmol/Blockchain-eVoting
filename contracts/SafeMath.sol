@@ -1,0 +1,1 @@
+//A library contract that provides safe arithmetic operations to prevent integer overflow and underflow.

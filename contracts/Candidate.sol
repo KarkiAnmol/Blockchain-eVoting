@@ -1,0 +1,1 @@
+// A contract that defines the functions for candidate registration, including adding and removing candidates.
