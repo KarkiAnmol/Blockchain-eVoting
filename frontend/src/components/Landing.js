@@ -1,12 +1,20 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import "./Landing.css";
 //functional component that will render the landing page
 function Landing() {
   return (
-    <div>
-      <h1>Welcome to our Election App!</h1>
-      <p>
-        This is a decentralized voting platform built on Ethereum blockchain.
-      </p>
+    <div className="landingPage">
+      <h1>Welcome to e-Lect</h1>
+      <p>Join the digital revolution of voting</p>
+      <div className="landing-page-buttons">
+        <Link to="/voting" className="landing-page-button">
+          Vote Now
+        </Link>
+        <Link to="/create" className="landing-page-button">
+          Create an Election
+        </Link>
+      </div>
     </div>
   );
 }
