@@ -2,15 +2,15 @@ const Voter = require("../model/voter");
 registerVoter = async (req, res) => {
   console.log("registerVoter function called");
 
-  const { passportNumber, name, dob } = req.body;
+  const { name, passportNumber, dateOfBirth } = req.body;
   console.log(
-    `Received request to register voter with passport number: ${passportNumber}`
+    `Received request to register voter with passport number:${name} ${dateOfBirth} ${passportNumber}`
   );
 
   const voter = await Voter.findOne({
-    passportNumber: passportNumber,
     name: name,
-    dob: dob,
+    passportNumber: passportNumber,
+    dateOfBirth: dateOfBirth,
   });
   if (voter) {
     res.send({ verified: true });
