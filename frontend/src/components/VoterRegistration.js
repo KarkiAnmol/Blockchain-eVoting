@@ -13,9 +13,33 @@ function RegisterPage() {
   const [dateOfBirth, setDateOfBirth] = useState("");
 
   // Handle form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // TODO: Implement form submission logic
+    const formData = new FormData();
+    formData.append("passportNumber", passportNumber);
+    formData.append("name", name);
+    formData.append("dob", dateOfBirth);
+
+    // Make a POST request to the backend to verify the voter's information
+
+    const response = await fetch("http://localhost:5000/register", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await response.json();
+    const isVerified = data.verified;
+
+    // If voter is verified, proceed with registration
+    if (isVerified) {
+      alert(
+        "Verification Successful✅,now you will be registered on the blockchain"
+      );
+      // TODO: Implement voter registration logic using smart contract
+    } else {
+      alert(
+        "Verification failed. Please check your information and try again."
+      );
+    }
   };
 
   // Handle passport photo upload
