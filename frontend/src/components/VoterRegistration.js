@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./VoterRegistration.css";
 
+import { useNavigate } from "react-router-dom";
+
 function RegisterPage() {
+  const navigate = useNavigate();
   // Define state variables for form fields
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -15,25 +18,34 @@ function RegisterPage() {
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData();
-    formData.append("passportNumber", passportNumber);
-    formData.append("name", name);
-    formData.append("dob", dateOfBirth);
+
+    const data1 = {
+      name: name,
+      passportNumber: passportNumber,
+      dateOfBirth: dateOfBirth,
+    };
+    // console.log(formData);
 
     // Make a POST request to the backend to verify the voter's information
-
-    const response = await fetch("http://localhost:5000/register", {
+    const response = await fetch("http://localhost:3000/register", {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data1),
     });
-    const data = await response.json();
-    const isVerified = data.verified;
+
+    const responseData = await response.json();
+    const isVerified = responseData.verified;
 
     // If voter is verified, proceed with registration
+    // console.log("about to verify");
     if (isVerified) {
       alert(
         "Verification Successful✅,now you will be registered on the blockchain"
       );
+      navigate("/voting"); // navigate to the voting page
+
       // TODO: Implement voter registration logic using smart contract
     } else {
       alert(

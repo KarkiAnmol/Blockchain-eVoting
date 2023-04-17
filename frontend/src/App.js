@@ -5,6 +5,7 @@ import Landing from "./components/Landing";
 import About from "./pages/AboutUs";
 import Login from "./components/VoterLogin";
 import Register from "./components/VoterRegistration";
+import Voting from "./components/voting";
 function App() {
   return (
     <Router>
@@ -15,6 +16,7 @@ function App() {
           <Route path="/about" exact element={<About />} />
           <Route path="/login" exact element={<Login />} />
           <Route path="/register" exact element={<Register />} />
+          <Route path="/voting" exact element={<Voting />} />
         </Routes>
         <Footer />
       </div>
