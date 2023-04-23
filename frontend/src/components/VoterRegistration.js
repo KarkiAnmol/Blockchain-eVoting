@@ -8,6 +8,13 @@ import { useNavigate } from "react-router-dom";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import { fetchContract } from "../context/Voter";
+import { create } from "ipfs-http-client";
+import { Buffer } from "buffer";
+
+// import WalletConnectProvider from "@walletconnect/web3-provider";
+// import Fortmatic from "fortmatic";
+// import dotenv from "dotenv";
+// dotenv.config();
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -60,7 +67,18 @@ function RegisterPage() {
       //Connecting smart contract
 
       const providerOptions = {
-        /* See Provider Options Section */
+        // walletconnect: {
+        //   package: WalletConnectProvider,
+        //   options: {
+        //     infuraId: process.env.INFURA_ID,
+        //   },
+        // },
+        // fortmatic: {
+        //   package: Fortmatic,
+        //   options: {
+        //     key: process.env.FORTMATIC_API_KEY,
+        //   },
+        // },
       };
 
       const web3Modal = new Web3Modal({
@@ -80,6 +98,42 @@ function RegisterPage() {
       const signer = provider.getSigner();
       const contract = fetchContract(signer);
       console.log("contract:", contract);
+
+      // const client = create();
+
+      /* configure Infura auth settings */
+      const projectId = "2OoInHAMMFhyet8kCoaOnEwyUeY";
+
+      const projectSecret = "75229b2d8533c478eb558850795db1aa";
+      const auth =
+        "Basic " +
+        Buffer.from(projectId + ":" + projectSecret).toString("base64");
+
+      const client = create({
+        host: "ipfs.infura.io",
+        port: 5001,
+        protocol: "https",
+        headers: {
+          authorization: auth,
+        },
+      });
+      console.log("client:", client);
+      const data = JSON.stringify({
+        name,
+        address,
+        passportNumber,
+        passportPhoto,
+      });
+
+      // console.log("data: ...", data);
+
+      // const added = await client.add(data);
+      /* upload the file */
+      const added = await client.add(data);
+      // console.log("addded: ", added);
+      const url = `https://infura-ipfs.io/ipfs/${added.path}`;
+
+      console.log("IPFS URI: ", url);
 
       //-----------------------------------
       //-----------------------------------
