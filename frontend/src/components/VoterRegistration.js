@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./VoterRegistration.css";
+import { ethers, providers } from "ethers";
 
 import { useNavigate } from "react-router-dom";
+// import { Web3Modal } from "@web3modal/react";
+import Web3 from "web3";
+import Web3Modal from "web3modal";
+import { fetchContract } from "../context/Voter";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -14,6 +19,7 @@ function RegisterPage() {
   const [passportNumber, setPassportNumber] = useState("");
   const [passportPhoto, setPassportPhoto] = useState(null);
   const [dateOfBirth, setDateOfBirth] = useState("");
+  const [web3Modal, setWeb3Modal] = useState(null);
 
   // Handle form submission
   const handleSubmit = async (event) => {
@@ -39,14 +45,45 @@ function RegisterPage() {
     const isVerified = responseData.verified;
 
     // If voter is verified, proceed with registration
-    // console.log("about to verify");
+
     if (isVerified) {
       alert(
         "Verification Successful✅,now you will be registered on the blockchain"
       );
       navigate("/voting"); // navigate to the voting page
 
+      //-----------------------------------
+      //-----------------------------------
+
       // TODO: Implement voter registration logic using smart contract
+
+      //Connecting smart contract
+
+      const providerOptions = {
+        /* See Provider Options Section */
+      };
+
+      const web3Modal = new Web3Modal({
+        // network: "mainnet", // optional
+        // cacheProvider: true, // optional
+        providerOptions, // required
+      });
+
+      const connection = await web3Modal.connect();
+      // const provider
+
+      // const web3 = new Web3(provider);
+
+      console.log("the following object is here:  ");
+      console.log(web3Modal);
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+      const contract = fetchContract(signer);
+      console.log("contract:", contract);
+
+      //-----------------------------------
+      //-----------------------------------
+      //--------------
     } else {
       alert(
         "Verification failed. Please check your information and try again."

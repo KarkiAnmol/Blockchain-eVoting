@@ -1,1 +1,0 @@
-//A contract that defines the functions for voter registration, login, and voting
