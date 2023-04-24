@@ -10,6 +10,10 @@ import Web3Modal from "web3modal";
 import { fetchContract } from "../context/Voter";
 import { create } from "ipfs-http-client";
 import { Buffer } from "buffer";
+// import dotenv from "dotenv";
+// dotenv.config();
+
+// import "../../../contracts/Election.sol";
 
 // import WalletConnectProvider from "@walletconnect/web3-provider";
 // import Fortmatic from "fortmatic";
@@ -59,6 +63,9 @@ function RegisterPage() {
       );
       navigate("/voting"); // navigate to the voting page
 
+      // console.log(` infura id: ${process.env.INFURA_ID}`);
+      // console.log(` SECRET KEY: ${process.env.SECRET_KEY}`);
+
       //-----------------------------------
       //-----------------------------------
 
@@ -102,8 +109,10 @@ function RegisterPage() {
       // const client = create();
 
       /* configure Infura auth settings */
-      const projectId = "2OoInHAMMFhyet8kCoaOnEwyUeY";
+      // const projectId = process.env.INFURA_ID;
 
+      // const projectSecret = process.env.SECRET_KEY;
+      const projectId = "2OoInHAMMFhyet8kCoaOnEwyUeY";
       const projectSecret = "75229b2d8533c478eb558850795db1aa";
       const auth =
         "Basic " +
@@ -134,6 +143,21 @@ function RegisterPage() {
       const url = `https://infura-ipfs.io/ipfs/${added.path}`;
 
       console.log("IPFS URI: ", url);
+
+      // const votersAddress = await contract.getVotersAddress();
+      // const accounts = await provider.listAccounts();
+      // const voterAddress = accounts[0];
+
+      const voter = await contract.voterRight(
+        address,
+        name,
+        passportPhoto,
+        url
+      );
+      await voter.wait();
+      console.log("Voter Registered:");
+      console.log("voter data that will be redirected to voterlist:", voter);
+      // navigate("/voterlist");
 
       //-----------------------------------
       //-----------------------------------

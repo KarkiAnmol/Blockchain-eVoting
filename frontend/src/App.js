@@ -8,6 +8,7 @@ import Register from "./components/VoterRegistration";
 import Voting from "./components/voting";
 import Admin from "./components/Admin";
 import { VotingProvider } from "./context/Voter";
+import VoterList from "./pages/VoterList";
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
               exact
               element={<Voting Component={Voting} pageProps={{}} />}
             />
+            <Route path="/voterlist" exact element={<VoterList />} />
+
             <Route path="/admin" exact element={<Admin />} />
           </Routes>
           <Footer />

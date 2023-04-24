@@ -49,7 +49,7 @@ contract Create {
     struct Voter {
         uint256 voter_voterid;
         string voter_name;
-        string voter_id;
+        // string voter_id;
         string voter_image;
         address voter_address;
         uint256 voter_allowed;
@@ -62,7 +62,6 @@ contract Create {
     event VoterCreate(
         uint256 indexed voter_voterid,
         string voter_name,
-        string voter_id,
         string voter_image,
         address voter_address,
         uint256 voter_allowed,
@@ -164,7 +163,6 @@ contract Create {
     function voterRight(
         address _address,
         string memory _name,
-        string memory _id,
         string memory _image,
         string memory _ipfs
     ) public {
@@ -195,7 +193,6 @@ contract Create {
         emit VoterCreate(
             idNumber,
             _name,
-            _id,
             _image,
             _address,
             voter.voter_allowed,
