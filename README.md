@@ -78,7 +78,14 @@ To use the platform, open your browser and navigate to http://localhost:3000/, t
 # Contributing
 If you would like to contribute to the project, please create a pull request with your changes. Before submitting a pull request, please make sure to:
 
-Run npm run lint to check for any linting errors
-Run npm test to make sure all tests pass
+Run this command to check for any linting errors
+
+```shell
+npm run lint
+```
+Run this command to make sure all tests pass
+```shell
+npm test
+```
 # License
 This project is licensed under the MIT license. See the LICENSE file for more details.
