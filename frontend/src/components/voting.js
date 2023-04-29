@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { VotingProvider } from "../context/Voter";
-import { VotingContext } from "../context/Voter";
+import { VotingContext, fetchContract } from "../context/Voter";
+import Web3Modal from "web3modal";
+import { ethers, providers } from "ethers";
 
 function Voting(props) {
   const { Component, pageProps } = props;
-  const { votingTitle } = useContext(VotingContext);
+  const { votingTitle /*createVoter*/ } = useContext(VotingContext);
 
   return (
     <VotingProvider>

@@ -10,6 +10,10 @@ function Header() {
           <h1 className="header-logo-title">e-Lect</h1>
         </div>
 
+        <Link to={"/register"} className="registerButton-top">
+          Authorize
+        </Link>
+
         <nav className="header-nav">
           <ul className="header-nav-list">
             <li className="header-nav-item">
@@ -27,16 +31,17 @@ function Header() {
                 Results
               </Link>
             </li>
-            <li className="header-nav-item">
+            {/* <li className="header-nav-item">
               <Link to="/" className="header-nav-link">
                 User Dashboard
               </Link>
-            </li>
-            <li className="header-nav-item">
+            </li> */}
+            {/* <li className="header-nav-item">
               <Link to="/" className="header-nav-link">
                 Admin Dashboard
               </Link>
-            </li>
+            </li> */}
+
             <li className="header-nav-item">
               <Link to="/howitworks" className="header-nav-link">
                 How it works
@@ -47,16 +52,16 @@ function Header() {
                 features
               </Link>
             </li>
-            <li className="header-nav-item">
-              <Link to="/login" className="header-nav-link">
-                Login
+            {/* <li className="header-nav-item">
+              <Link to="/register" className="header-nav-link">
+                Authorize
               </Link>
-            </li>
-            <li className="header-nav-item">
+            </li> */}
+            {/* <li className="header-nav-item">
               <Link to="/signup" className="header-nav-link">
                 Sign Up
               </Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
       </div>

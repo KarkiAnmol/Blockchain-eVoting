@@ -68,7 +68,6 @@ const RegisterPage = () => {
     const isVerified = responseData.verified;
 
     // If voter is verified, proceed with registration
-
     if (isVerified) {
       alert(
         "Verification Successful✅,you will be registered on the blockchain"
@@ -80,6 +79,7 @@ const RegisterPage = () => {
     }
   };
 
+  // Render the component
   return (
     <div className="register-container">
       <h1 className="register-title">Voter Authorization</h1>

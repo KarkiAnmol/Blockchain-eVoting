@@ -18,6 +18,13 @@ contract Create {
 
     // Address of the voting organizer
     address public votingOrganizer;
+    // Array of candidate addresses and mapping of candidate addresses to candidates
+    address[] public candidateAddress;
+    mapping(address => Candidate) public candidates;
+    // Array of voted voter addresses, array of voter addresses, and mapping of voter addresses to voters
+    address[] public votedVoters;
+    address[] public votersAddress;
+    mapping(address => Voter) public voters;
 
     // Candidate struct definition
     struct Candidate {
@@ -40,10 +47,6 @@ contract Create {
         uint256 voterCount,
         string ipfs
     );
-
-    // Array of candidate addresses and mapping of candidate addresses to candidates
-    address[] public candidateAddress;
-    mapping(address => Candidate) public candidates;
 
     // Voter struct definition
     struct Voter {
@@ -69,11 +72,6 @@ contract Create {
         uint256 voter_vote,
         string voter_ipfs
     );
-
-    // Array of voted voter addresses, array of voter addresses, and mapping of voter addresses to voters
-    address[] public votedVoters;
-    address[] public votersAddress;
-    mapping(address => Voter) public voters;
 
     // Constructor function that sets the voting organizer to the contract deployer
     constructor() {
@@ -167,16 +165,16 @@ contract Create {
         string memory _ipfs
     ) public {
         // Only the voting organizer can register voters
-        require(
-            votingOrganizer == msg.sender,
-            "only voting organizer can register voters"
-        );
+        // require(
+        //     votingOrganizer == msg.sender,
+        //     "only voting organizer can register voters"
+        // );
 
         _voterId.increment();
 
         uint256 idNumber = _voterId.current();
         Voter storage voter = voters[_address];
-        require(voter.voter_allowed == 0);
+        // require(voter.voter_allowed == 0);
 
         // Set the voter information
         voter.voter_allowed = 1;
