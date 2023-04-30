@@ -27,7 +27,7 @@ function Header() {
               </Link>
             </li>
             <li className="header-nav-item">
-              <Link to="/" className="header-nav-link">
+              <Link to="/voting" className="header-nav-link">
                 Results
               </Link>
             </li>
@@ -51,6 +51,11 @@ function Header() {
               <Link to="/features" className="header-nav-link">
                 features
               </Link>
+            </li>
+            <li className="header-nav-item">
+              {/* <Link to="/voterlist" className="header-nav-link">
+                Registered Voters
+              </Link> */}
             </li>
             {/* <li className="header-nav-item">
               <Link to="/register" className="header-nav-link">

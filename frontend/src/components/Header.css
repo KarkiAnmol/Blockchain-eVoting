@@ -40,6 +40,10 @@
 
 .header-nav-item {
   margin: 0;
+  /* font-style: oblique;
+   */
+  font-size: large;
+  font-weight: 500;
 }
 
 .header-nav-link {

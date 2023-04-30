@@ -11,9 +11,10 @@ function Landing() {
         <Link to="/voting" className="landing-page-button">
           Vote Now
         </Link>
-        {/* <Link to="/create" className="landing-page-button">
-          Create an Election
-        </Link> */}
+
+        <Link to="/voterlist" className="landing-page-button">
+          Registered Voters
+        </Link>
       </div>
     </div>
   );

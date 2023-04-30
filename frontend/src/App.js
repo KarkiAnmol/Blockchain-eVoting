@@ -5,7 +5,7 @@ import Landing from "./components/Landing";
 import About from "./pages/AboutUs";
 import Register from "./components/VoterRegistration";
 import Voting from "./components/voting";
-import Admin from "./components/Admin";
+// import Admin from "./components/Admin";
 import { VotingProvider } from "./context/Voter";
 import VoterList from "./pages/VoterList";
 import CandidateRegistraion from "./pages/CandidateRegistration";
@@ -21,28 +21,24 @@ function App() {
             <Route path="/" exact element={<Landing />} />
             <Route path="/about" exact element={<About />} />
             <Route path="/register" exact element={<Register />} />
-            <Route
+            {/* <Route
               path="/voting"
               exact
               element={<Voting Component={Voting} pageProps={{}} />}
-            />
+            /> */}
             <Route
               path="/voterlist"
               exact
               element={<VoterList Component={Voting} pageProps={{}} />}
             />
             <Route
-              path="/candidate"
+              path="/voting"
               exact
               element={<Candidate Component={Voting} pageProps={{}} />}
             />
-            <Route
-              path="/candidateregistration"
-              exact
-              element={<CandidateRegistraion />}
-            />
+            <Route path="/admin" exact element={<CandidateRegistraion />} />
 
-            <Route path="/admin" exact element={<Admin />} />
+            {/* <Route path="/admin" exact element={<Admin />} /> */}
           </Routes>
           <Footer />
         </div>
