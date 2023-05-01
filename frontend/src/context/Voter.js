@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Buffer } from "buffer";
 import { VotingAddress, VotingAddressABI } from "./constants";
 import { seconds } from "@nomicfoundation/hardhat-network-helpers/dist/src/helpers/time/duration";
+import { exit } from "process";
 
 // Infura project authentication credentials
 const projectId = "2OoInHAMMFhyet8kCoaOnEwyUeY";
@@ -39,6 +40,8 @@ export const VotingProvider = ({ children }) => {
 
   const [currentAccount, setCurrentAccount] = useState("");
   const [candidateLength, setCandidateLength] = useState("");
+  const [winnerAddress, setWinnerAddress] = useState(null);
+  const [winName, setWinName] = useState("xx");
   const pushCandidate = [];
   const candidateIndex = [];
   const [candidateArray, setCandidateArray] = useState(pushCandidate);
@@ -106,7 +109,6 @@ export const VotingProvider = ({ children }) => {
       console.log("Error uploading file to IPFS.", error);
     }
   };
-  // const navigate = useNavigate();
 
   //CREATE VOTER ---- DEBUGGED ✅
   const createVoter = async (formInput, fileUrl) => {
@@ -135,9 +137,7 @@ export const VotingProvider = ({ children }) => {
 
       // console.log("abpout ot use voter right function");
       try {
-        const voter = await contract.voterRight(address, name, fileUrl, url, {
-          gasLimit: 1000000,
-        });
+        const voter = await contract.voterRight(address, name, fileUrl, url);
         voter.wait();
         console.log(`Voter Registered:✅ `);
         console.log(
@@ -332,9 +332,65 @@ export const VotingProvider = ({ children }) => {
       setError("Something went wron fetching data", error);
     }
   };
+
+  // Asynchronous function to determine the winner of the election
+  const winner = async () => {
+    try {
+      // Initialize provider options and connect to the Ethereum network using Web3Modal
+      const providerOptions = {};
+      const web3Modal = new Web3Modal({
+        providerOptions,
+      });
+      const connection = await web3Modal.connect();
+      // Get the signer and contract using the connected provider
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+      const contract = fetchContract(signer);
+
+      // Get all the candidates from the smart contract
+      const allCandidate = await contract.getCandidate();
+
+      // Initialize count and winnerAddress variables
+      let count = 0;
+      let winnerAddress = null;
+
+      // Loop through all the candidates and determine the one with the most votes
+      for (let i = 0; i < allCandidate.length; i++) {
+        // Get the vote count and name of the current candidate
+        const temp = await contract.voteCount(allCandidate[i]);
+        const naam = await contract.winnerName(allCandidate[i]);
+
+        // console.log(`${naam} has vote count:`, temp.toNumber());
+
+        // If the current candidate has more votes than the current count, update the count and winnerAddress
+        if (temp.toNumber() > count) {
+          count = temp.toNumber();
+          winnerAddress = allCandidate[i];
+        }
+      }
+
+      // Get the name of the winning candidate and set winName variable wit the winner's name
+      const name = await contract.winnerName(winnerAddress);
+      setWinName(name);
+      // console.log("THE WINNER IS ", name);
+      // console.log(
+      //   `The winner of the election is address: ${winnerAddress.slice(
+      //     0,
+      //     10
+      //   )} with vote count ${count}`
+      // );
+    } catch (error) {
+      // Log any errors that occur during the execution of the function
+      console.log(
+        "Error: Cannot determine the winner of the election: ",
+        error
+      );
+    }
+  };
   useEffect(() => {
+    winner();
     getNewCandidate();
-    getAllVoterData();
+    //   getAllVoterData();
   }, []);
   return (
     <VotingContext.Provider
@@ -348,6 +404,7 @@ export const VotingProvider = ({ children }) => {
         giveVote,
         setCandidate,
         error,
+        winName,
         voterArray,
         voterLength,
         voterAddress,
@@ -356,6 +413,8 @@ export const VotingProvider = ({ children }) => {
         candidateArray,
         getNewCandidate,
         uploadToIPFSCandidate,
+        winner,
+        winnerAddress,
       }}
     >
       {children}
