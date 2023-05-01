@@ -3,6 +3,19 @@
   color: white;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+.registerButton-top {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: navy;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 .header-container {
   display: flex;
@@ -27,6 +40,10 @@
 
 .header-nav-item {
   margin: 0;
+  /* font-style: oblique;
+   */
+  font-size: large;
+  font-weight: 500;
 }
 
 .header-nav-link {

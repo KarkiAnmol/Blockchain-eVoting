@@ -1,31 +1,88 @@
-import React, { useState } from "react";
+// Import necessary packages
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { ethers, providers } from "ethers";
+import { useNavigate } from "react-router-dom";
+import Web3 from "web3";
+import Web3Modal from "web3modal";
+// Import custom components and context
 import "./VoterRegistration.css";
+import { VotingContext, VotingProvider, fetchContract } from "../context/Voter";
 
-function RegisterPage() {
-  // Define state variables for form fields
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [passportNumber, setPassportNumber] = useState("");
+// import dotenv from "dotenv";
+// dotenv.config();
+
+const RegisterPage = () => {
+  // Initialize necessary state variables
+  const navigate = useNavigate();
+  const [fileUrl, setFileUrl] = useState(null);
   const [passportPhoto, setPassportPhoto] = useState(null);
-  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [formInput, setFormInput] = useState({
+    name: "",
+    address: "",
+    email: "",
+    passportNumber: "",
+    dateOfBirth: "",
+  });
+
+  const { uploadToIPFS, createVoter, voterArray, getAllVoterData } =
+    useContext(VotingContext);
+
+  // Handle the change event when user selects passport photo
+  const handlePassportPhotoChange = async (event) => {
+    const file = event.target.files[0];
+    // console.log("File:", file);
+    const url = await uploadToIPFS(file);
+    // console.log("URL:", url);
+    setFileUrl(url);
+    setPassportPhoto(file);
+  };
+
+  // Get all voter data from the context on component mount
+  // useEffect(() => {
+  //   getAllVoterData();
+  // }, []);
 
   // Handle form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // TODO: Implement form submission logic
+
+    // Prepare voter data to send for verification
+    const data1 = {
+      name: formInput.name,
+      passportNumber: formInput.passportNumber,
+      dateOfBirth: formInput.dateOfBirth,
+    };
+
+    // Make a POST request to the backend to verify the voter's information
+    const response = await fetch("http://localhost:3000/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data1),
+    });
+
+    // Parse response data and check if verification was successful
+    const responseData = await response.json();
+    const isVerified = responseData.verified;
+
+    // If voter is verified, proceed with registration
+    if (isVerified) {
+      alert(
+        "Verification Successful✅,you will be registered on the blockchain"
+      );
+    } else {
+      alert(
+        "❗Verification failed. Please check your information and try again."
+      );
+    }
   };
 
-  // Handle passport photo upload
-  const handlePassportPhotoChange = (event) => {
-    setPassportPhoto(event.target.files[0]);
-  };
-
+  // Render the component
   return (
     <div className="register-container">
-      <h1 className="register-title">Voter Registration</h1>
+      <h1 className="register-title">Voter Authorization</h1>
 
       <form onSubmit={handleSubmit} className="register-form">
         {/* Name field */}
@@ -34,8 +91,9 @@ function RegisterPage() {
           <input
             type="text"
             id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) =>
+              setFormInput({ ...formInput, name: e.target.value })
+            }
             required
           />
         </div>
@@ -46,20 +104,9 @@ function RegisterPage() {
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-
-        {/* Password field */}
-        <div className="password-field">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) =>
+              setFormInput({ ...formInput, email: e.target.value })
+            }
             required
           />
         </div>
@@ -69,8 +116,9 @@ function RegisterPage() {
           <label htmlFor="address">Address:</label>
           <textarea
             id="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={(e) => {
+              setFormInput({ ...formInput, address: e.target.value });
+            }}
             required
           />
         </div>
@@ -81,8 +129,9 @@ function RegisterPage() {
           <input
             type="text"
             id="passportNumber"
-            value={passportNumber}
-            onChange={(e) => setPassportNumber(e.target.value)}
+            onChange={(e) =>
+              setFormInput({ ...formInput, passportNumber: e.target.value })
+            }
             required
           />
         </div>
@@ -105,19 +154,26 @@ function RegisterPage() {
           <input
             type="date"
             id="dateOfBirth"
-            value={dateOfBirth}
-            onChange={(e) => setDateOfBirth(e.target.value)}
+            onChange={(e) =>
+              setFormInput({ ...formInput, dateOfBirth: e.target.value })
+            }
             required
           />
         </div>
 
-        <button type="submit">Register</button>
+        <button
+          type="submit"
+          onClick={() => {
+            createVoter(formInput, fileUrl);
+
+            navigate("/voting");
+          }}
+        >
+          Authorize
+        </button>
       </form>
-      <div className="last-login-field">
-        Already have an account? <Link to="/login">Login here</Link>
-      </div>
     </div>
   );
-}
+};
 
 export default RegisterPage;
