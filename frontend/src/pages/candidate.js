@@ -1,5 +1,5 @@
 // Importing necessary modules
-import React, { useContext, useEffect } from "react"; // Importing React and its hooks
+import React, { useState, useContext, useEffect } from "react"; // Importing React and its hooks
 
 import { VotingProvider } from "../context/Voter"; // Importing the VotingProvider component from "../context/Voter"
 import { VotingContext, fetchContract } from "../context/Voter";
@@ -20,12 +20,26 @@ const Candidate = () => {
     candidateLength,
     currentAccount,
     voterLength,
+    getAllVoterData,
+    winnerAddress,
+    winName,
   } = useContext(VotingContext);
+
+  const [showWinner, setShowWinner] = useState(false);
+
+  const handleCountdownComplete = () => {
+    setShowWinner(true);
+  };
 
   // Checking if the wallet is connected
   useEffect(() => {
     checkIfWalletIsConnected();
-  });
+    getNewCandidate();
+    getAllVoterData();
+  }, []);
+  // useEffect(() => {
+
+  // }, []);
 
   // Component rendering
   return (
@@ -46,7 +60,17 @@ const Candidate = () => {
           </div>
           <div className="winner_message">
             <small>
-              <Countdown date={Date.now() + 1000000} />
+              <Countdown
+                date={Date.now() + 10000}
+                onComplete={handleCountdownComplete}
+              />
+              {showWinner && (
+                <div className="winner_message_box">
+                  <h1>
+                    <span>{winName} </span>is the winner!
+                  </h1>{" "}
+                </div>
+              )}
             </small>
           </div>
         </div>

@@ -39,9 +39,9 @@ const RegisterPage = () => {
   };
 
   // Get all voter data from the context on component mount
-  useEffect(() => {
-    getAllVoterData();
-  }, []);
+  // useEffect(() => {
+  //   getAllVoterData();
+  // }, []);
 
   // Handle form submission
   const handleSubmit = async (event) => {
@@ -74,7 +74,7 @@ const RegisterPage = () => {
       );
     } else {
       alert(
-        "Verification failed. Please check your information and try again."
+        "❗Verification failed. Please check your information and try again."
       );
     }
   };
@@ -166,7 +166,7 @@ const RegisterPage = () => {
           onClick={() => {
             createVoter(formInput, fileUrl);
 
-            navigate("/candidate");
+            navigate("/voting");
           }}
         >
           Authorize
