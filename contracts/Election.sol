@@ -86,10 +86,10 @@ contract Create {
         string memory _image,
         string memory _ipfs
     ) public {
-        require(
-            votingOrganizer == msg.sender,
-            "Only Organizer can authorize candidate "
-        );
+        // require(
+        //     votingOrganizer == msg.sender,
+        //     "Only Organizer can authorize candidate "
+        // );
 
         // Increment the candidate ID counter and get the current ID
         _candidateId.increment();
@@ -155,6 +155,16 @@ contract Create {
             candidates[_address].ipfs,
             candidates[_address]._address
         );
+    }
+
+    //  Returns the vote count of a candidate with the specified Ethereum address.
+    function voteCount(address _address) public view returns (uint256) {
+        return (candidates[_address].voterCount);
+    }
+
+    //  Returns the name of a candidate with the specified Ethereum address.
+    function winnerName(address _address) public view returns (string memory) {
+        return (candidates[_address].name);
     }
 
     // Function for voting organizer to grant voter rights
