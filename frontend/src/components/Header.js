@@ -21,11 +21,11 @@ function Header() {
                 Home
               </Link>
             </li>
-            <li className="header-nav-item">
+            {/* <li className="header-nav-item">
               <Link to="/about" className="header-nav-link">
                 About Us
               </Link>
-            </li>
+            </li> */}
             <li className="header-nav-item">
               <Link to="/voting" className="header-nav-link">
                 Results

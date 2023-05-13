@@ -41,7 +41,7 @@ export const VotingProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
   const [candidateLength, setCandidateLength] = useState("");
   const [winnerAddress, setWinnerAddress] = useState(null);
-  const [winName, setWinName] = useState("xx");
+  const [winName, setWinName] = useState("Noone");
   const pushCandidate = [];
   const candidateIndex = [];
   const [candidateArray, setCandidateArray] = useState(pushCandidate);
@@ -387,11 +387,11 @@ export const VotingProvider = ({ children }) => {
       );
     }
   };
-  useEffect(() => {
-    winner();
-    getNewCandidate();
-    //   getAllVoterData();
-  }, []);
+  // useEffect(() => {
+  //   winner();
+  //   getNewCandidate();
+  //   //   getAllVoterData();
+  // }, []);
   return (
     <VotingContext.Provider
       value={{

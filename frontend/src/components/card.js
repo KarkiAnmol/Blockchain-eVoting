@@ -9,7 +9,7 @@ const Card = ({ candidateArray, giveVote }) => {
     <div className="card">
       {/* Loop through each candidate in the candidateArray prop */}
       {candidateArray.map((el, i) => (
-        <div className="card_box">
+        <div key={`${i}-${el[2].toNumber()}`} className="card_box">
           <div className="image">
             {/* Display the candidate's profile picture */}
 

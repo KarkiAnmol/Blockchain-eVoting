@@ -26,9 +26,11 @@ const Candidate = () => {
   } = useContext(VotingContext);
 
   const [showWinner, setShowWinner] = useState(false);
+  const [countdownCompleted, setCountdownCompleted] = useState(false);
 
   const handleCountdownComplete = () => {
     setShowWinner(true);
+    setCountdownCompleted(true);
   };
 
   // Checking if the wallet is connected
@@ -60,10 +62,12 @@ const Candidate = () => {
           </div>
           <div className="winner_message">
             <small>
-              <Countdown
-                date={Date.now() + 10000}
-                onComplete={handleCountdownComplete}
-              />
+              {!countdownCompleted && (
+                <Countdown
+                  date={Date.now() + 60000}
+                  onComplete={handleCountdownComplete}
+                />
+              )}
               {showWinner && (
                 <div className="winner_message_box">
                   <h1>

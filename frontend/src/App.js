@@ -12,7 +12,6 @@ import { VotingProvider } from "./context/Voter";
 import VoterList from "./pages/VoterList";
 import CandidateRegistraion from "./pages/CandidateRegistration";
 import Candidate from "./pages/candidate";
-
 function App() {
   return (
     <VotingProvider>
