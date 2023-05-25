@@ -43,6 +43,7 @@ export const VotingProvider = ({ children }) => {
   const [winnerAddress, setWinnerAddress] = useState(null);
   const initialValue = "No one";
   const [winName, setWinName] = useState(initialValue);
+  const [voteCount, setVoteCount] = useState(0);
   const pushCandidate = [];
   const candidateIndex = [];
   const [candidateArray, setCandidateArray] = useState(pushCandidate);
@@ -369,6 +370,7 @@ export const VotingProvider = ({ children }) => {
         // If the current candidate has more votes than the current count, update the count and winnerAddress
         if (temp.toNumber() > count) {
           count = temp.toNumber();
+          setVoteCount(count);
           winnerAddress = allCandidate[i];
         }
       }
@@ -419,6 +421,7 @@ export const VotingProvider = ({ children }) => {
         voterAddress,
         currentAccount,
         winner,
+        voteCount,
         candidateLength,
         candidateArray,
         getNewCandidate,

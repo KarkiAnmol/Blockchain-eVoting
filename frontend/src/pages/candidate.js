@@ -24,6 +24,7 @@ const Candidate = () => {
     winnerAddress,
     winner,
     winName,
+    voteCount,
   } = useContext(VotingContext);
 
   const [showWinner, setShowWinner] = useState(false);
@@ -32,6 +33,7 @@ const Candidate = () => {
   const handleCountdownComplete = () => {
     setShowWinner(true);
     setCountdownCompleted(true);
+    alert(`🎉🎉 ${winName} has won the election with ${voteCount} votes `);
     // winner();
   };
 
