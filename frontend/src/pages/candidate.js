@@ -22,6 +22,7 @@ const Candidate = () => {
     voterLength,
     getAllVoterData,
     winnerAddress,
+    winner,
     winName,
   } = useContext(VotingContext);
 
@@ -31,6 +32,7 @@ const Candidate = () => {
   const handleCountdownComplete = () => {
     setShowWinner(true);
     setCountdownCompleted(true);
+    // winner();
   };
 
   // Checking if the wallet is connected
@@ -64,7 +66,7 @@ const Candidate = () => {
             <small>
               {!countdownCompleted && (
                 <Countdown
-                  date={Date.now() + 60000}
+                  date={Date.now() + 12000}
                   onComplete={handleCountdownComplete}
                 />
               )}

@@ -41,7 +41,8 @@ export const VotingProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
   const [candidateLength, setCandidateLength] = useState("");
   const [winnerAddress, setWinnerAddress] = useState(null);
-  const [winName, setWinName] = useState("Noone");
+  const initialValue = "No one";
+  const [winName, setWinName] = useState(initialValue);
   const pushCandidate = [];
   const candidateIndex = [];
   const [candidateArray, setCandidateArray] = useState(pushCandidate);
@@ -143,6 +144,9 @@ export const VotingProvider = ({ children }) => {
         console.log(
           `voter data of address ${address} that will be redirected to voterlist:`,
           voter
+        );
+        alert(
+          "Verification Successful✅,you will be registered on the blockchain"
         );
         // voterAddress.push(address);
         // console.log("Voters Address from create Voter:", voterAddress);
@@ -371,8 +375,13 @@ export const VotingProvider = ({ children }) => {
 
       // Get the name of the winning candidate and set winName variable wit the winner's name
       const name = await contract.winnerName(winnerAddress);
-      setWinName(name);
-      // console.log("THE WINNER IS ", name);
+      try {
+        setWinName(name);
+        // alert("winner is ", name);
+      } catch (error) {
+        console.log(error);
+      }
+      // alert("THE WINNER IS ", name);
       // console.log(
       //   `The winner of the election is address: ${winnerAddress.slice(
       //     0,
@@ -387,11 +396,11 @@ export const VotingProvider = ({ children }) => {
       );
     }
   };
-  // useEffect(() => {
-  //   winner();
-  //   getNewCandidate();
-  //   //   getAllVoterData();
-  // }, []);
+  useEffect(() => {
+    winner();
+    // getNewCandidate();
+    //   getAllVoterData();
+  }, []);
   return (
     <VotingContext.Provider
       value={{
@@ -409,11 +418,12 @@ export const VotingProvider = ({ children }) => {
         voterLength,
         voterAddress,
         currentAccount,
+        winner,
         candidateLength,
         candidateArray,
         getNewCandidate,
         uploadToIPFSCandidate,
-        winner,
+        // winner,
         winnerAddress,
       }}
     >
