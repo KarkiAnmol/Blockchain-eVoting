@@ -2,6 +2,19 @@
 # Decentralized Voting Platform
 This is a decentralized voting platform built using React, Solidity, and Hardhat. The platform allows users to register as voters, verify their identity, and cast their vote for a candidate of their choice. The platform also allows administrators to create new candidates and monitor the voting process.
 
+![image](https://github.com/KarkiAnmol/Blockchain-eVoting/assets/97075159/82ae12e5-5ca9-4f79-b3a1-c2b4831245bc)
+![image](https://github.com/KarkiAnmol/Blockchain-eVoting/assets/97075159/60b2fd3b-74ed-4896-a9fb-62312fec6422)
+![image](https://github.com/KarkiAnmol/Blockchain-eVoting/assets/97075159/f34756e3-192c-481b-891e-1f0225c5db8a)
+![image](https://github.com/KarkiAnmol/Blockchain-eVoting/assets/97075159/c4ffbce1-1385-42ed-80ea-6126f2c6601e)
+![image](https://github.com/KarkiAnmol/Blockchain-eVoting/assets/97075159/e7f995a3-d840-4dad-9100-1eb982c0c178)
+![image](https://github.com/KarkiAnmol/Blockchain-eVoting/assets/97075159/ebf047bb-02bb-4961-858e-ca7a83be57d9)
+![image](https://github.com/KarkiAnmol/Blockchain-eVoting/assets/97075159/1ea9ffa4-3041-4e3b-9c56-03d418345e74)
+
+
+
+
+
+
 # Features
 The system includes the following features:
 
